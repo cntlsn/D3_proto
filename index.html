@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+    </head>
+    <style type="text/css">
+        .bar {
+            height: 20px;
+            background-color: red;
+            margin-top: 3px;
+            font-family: helvetica;
+            font-weight: bold;
+            color: white;
+            font-size: 20px;
+            padding: 5px;
+            
+        }
+    </style>
+    <body>
+
+        <!-- <div class="chart"> -->
+        <script type="text/javascript">
+            var dataset = [ 396,
+1075,
+897,
+1121,
+852,
+661,
+1122,
+242,
+59,
+943,
+366,
+896,
+905,
+1011,
+227,
+792,
+732,
+553,
+471,
+59,
+428,
+1119,
+482,
+184,
+445,
+1026,
+454,
+474,
+1100,
+653,
+590,
+123,
+228,
+752,
+454,
+53,
+45,
+829,
+1053,
+623,
+1100,
+777,
+1036,
+460,
+39,
+503,
+985,
+631,
+521,
+41 ];
+
+            d3.select("body")
+                .selectAll("div")
+                    .data(dataset)
+                .enter().append("div")
+                    .style("width", function(d) {return d + "px";})
+                    .attr("class", "bar")
+                    
+                .text(function(d) { return d; });                
+        </script>
+        <!-- </div> -->
+
+    </body>
+</html>
