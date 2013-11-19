@@ -13,7 +13,7 @@
             font-family: helvetica;
             font-weight: bold;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             padding: 5px;
             
         }
@@ -73,14 +73,18 @@
 521,
 41 ];
 
+var x = d3.scale.linear()
+    .domain([0, d3.max(dataset)])
+    .range([0, 1414]);
+
             d3.select("body")
                 .selectAll("div")
                     .data(dataset)
                 .enter().append("div")
-                    .style("width", function(d) {return d + "px";})
+                    .style("width", function(d) {return x(d) + "px";})
                     .attr("class", "bar")
-                    
-                .text(function(d) { return d; });                
+                
+                .text(function(d) { return d; });               
         </script>
         <!-- </div> -->
 
