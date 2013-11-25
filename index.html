@@ -5,10 +5,6 @@
         <title>D3 Fun</title>
         <script type="text/javascript" src="d3/d3.v3.js"></script>
         
-        
-        
-
-
     </head>
     <style type="text/css">
 
@@ -21,31 +17,33 @@
             font-family: Helvetica;
             font-weight: bold;
             text-anchor: start;
-/*            -webkit-transform: rotate(270deg);
-  -moz-transform: rotate(270deg);
-  -ms-transform: rotate(270deg);
-  -o-transform: rotate(270deg);
-  transform: rotate(270deg);
-  filter: none;*/
+            -webkit-transform: rotate(270deg);
+            -moz-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            -o-transform: rotate(270deg);
+            transform: rotate(270deg);
+            filter: none; /* IE stuff */
         }
     </style>
     <body>
+        <!-- TRIGGER DIFF DATASET -->
         <button onclick="plot('data.csv')">data</button>
-        <button onclick="plot('data2.csv')">data</button>
-
-        <!-- <button onclick="document.getElementsByTagName('rect').style.fill = 'blue';">data2</button> -->
+        <button onclick="plot('data2.csv')">data2</button>
         <button onclick="plot('data3.csv')">data3</button>
-        <div style="clear: both; margin-bottom:20px;"></div>
+        <div style="clear:both; margin-bottom:20px;"></div>
+
+        <!-- PLOT BARS -->
         <svg class="bars"></svg>
-        <script type="text/javascript">
+
+<!-- D3 FUN -->
+<script type="text/javascript">
 
     // chart size
     var width = 1200,
         height = 700;
 
-    // map the width of the bars with the max width of the container
+    // map the height of the bars with the max height of the container (the chart)
     var y = d3.scale.linear()
-        //.range([0, width]);
         .range([height, 0]);
 
     // select the canvas and add attributes
@@ -54,21 +52,22 @@
         .attr("height", height);
 
 
-function plot(filename) {
+    // function to plot a diff chart depending on the dataset passed as input
+    function plot(filename) {
 
     // clean the screen everytime a plot function is triggered by removing all the <g>'s elements
     chart.selectAll("g").remove();
 
     d3.csv(filename, typer, function(error, data) {
-        y.domain([0, d3.max(data, function(d) { return d.value; })]);
+        y.domain([0, d3.max(data, function(d) { return d.value; })]); // mapping of the bars height depending on the height of the chart actually happens here
 
-        var barWidth = width / data.length;
+        var barWidth = width / data.length; // bar width defined depending on the width of the chart and the number of items in the dataset
 
         // create svg elements (g tags) for each element in the dataset
         var bar = chart.selectAll("g")
                 .data(data)
             .enter().append("g")
-                .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+                .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; }); // set position for each bar
 
         // create the bar shape appending rect tags inside the g with inline attributes
         bar.append("rect")
@@ -80,14 +79,12 @@ function plot(filename) {
 
         // insert value of the element in the dataset as text into text tags with inline attributes
         bar.append("text")
-            //.attr("x", barWidth / 2)
-            .attr("x", (-barWidth) + (barWidth+3)   )
-            // .attr("y", function(d) { return y(d.value) + 3; })
-            .attr("y", height - 17)
-            //.attr("dy", ".75em")
-            .attr("dy", ".75em")
-            //.attr("dx", ".75em")
+            .attr("x", -height) // axis are inverted since text is rotated, align bottom
+            .attr("y", 0) // axis are inverted since text is rotated, align left
+            .attr("dy", "1em")
+            .attr("dx", ".30em")
             .text(function(d) { return d.value; });
+    
     });
 
     function typer(d) {
@@ -95,13 +92,13 @@ function plot(filename) {
         return d;
     }
   
-  }  
+    }  
+
+    // PLOT A DATASET ON PAGELOAD
+    plot("data.csv");
 
 
-plot("data.csv");
-
-
-        </script>
+</script>
 
        
 
